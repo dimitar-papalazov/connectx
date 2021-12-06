@@ -48,11 +48,13 @@ class ActorNetwork(nn.Module):
         super(ActorNetwork, self).__init__()
         self.checkpoint_file = cpname
         self.actor = nn.Sequential(
-            nn.Linear(input_dimensions, fc1_dimensions),
+            nn.Linear(input_dimensions, 42),
             nn.ReLU(),
-            nn.Linear(fc1_dimensions, fc2_dimensions),
+            nn.Linear(42, 21),
             nn.ReLU(),
-            nn.Linear(fc2_dimensions, n_actions),
+            nn.Linear(21, 10),
+            nn.ReLU(),
+            nn.Linear(10, n_actions),
             nn.Softmax(dim=1)
         )
         self.optimizer = optim.Adam(self.parameters(), lr=alpha)
@@ -77,11 +79,14 @@ class CriticNetwork(nn.Module):
         super(CriticNetwork, self).__init__()
         self.checkpoint_file = cpname
         self.critic = nn.Sequential(
-            nn.Linear(input_dimensions, fc1_dimensions),
+            nn.Linear(input_dimensions, 42),
             nn.ReLU(),
-            nn.Linear(fc1_dimensions, fc2_dimensions),
+            nn.Linear(42, 21),
             nn.ReLU(),
-            nn.Linear(fc2_dimensions, 1)
+            nn.Linear(21, 10),
+            nn.ReLU(),
+            nn.Linear(10, 1),
+            nn.Softmax(dim=1)
         )
         self.optimizer = optim.Adam(self.parameters(), lr=alpha)
         self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')

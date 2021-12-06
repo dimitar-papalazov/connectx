@@ -3,7 +3,6 @@ from ddqn.ddqn import DDQNAgent
 from ppo.ppo import PPOAgent
 import numpy as np
 from kaggle_environments import make
-from utils import preprocess_state
 
 
 def train_dqn():
@@ -13,7 +12,7 @@ def train_dqn():
     input_dimensions = config.rows * config.columns
     n_actions = config.columns
     agent = DQNAgent(gamma=0.99, epsilon=1.0, alpha=0.0005, input_dimensions=input_dimensions, n_actions=n_actions,
-                     memory_size=1000000, batch_size=128, epsilon_end=0.01)
+                     memory_size=1000000, batch_size=16, epsilon_end=0.01)
     trainer = env.train([None, 'random'])
     scores = []
     epsilon_history = []
@@ -55,7 +54,7 @@ def train_ddqn():
     input_dimensions = config.rows * config.columns
     n_actions = config.columns
     agent = DDQNAgent(gamma=0.99, epsilon=1.0, alpha=0.0005, input_dimensions=input_dimensions, n_actions=n_actions,
-                      memory_size=1000000, batch_size=128, epsilon_end=0.01)
+                      memory_size=1000000, batch_size=16, epsilon_end=0.01)
     trainer = env.train([None, 'random'])
     scores = []
     epsilon_history = []
@@ -93,8 +92,8 @@ def train_ddqn():
 def train_ppo():
     env = make('connectx', debug=True)
     N = 20
-    batch_size = 5
-    n_epochs = 4
+    batch_size = 16
+    n_epochs = 20
     alpha = 0.0003
     episodes = 10000
     config = env.configuration
@@ -146,6 +145,6 @@ def train_ppo():
 
 
 if __name__ == '__main__':
-    train_dqn()
+    # train_dqn()
     # train_ddqn()
-    # train_ppo()
+    train_ppo()

@@ -43,20 +43,14 @@ class ReplayBuffer(object):
 
 def build_dqn(learning_rate, n_actions, input_dimensions, fc1_dimensions, fc2_dimensions):
     model = Sequential([
-        Dense(fc1_dimensions, input_shape=(input_dimensions,)),
+        Dense(42, input_shape=(input_dimensions,)),
         Activation('relu'),
-        Dense(fc2_dimensions),
+        Dense(21),
         Activation('relu'),
-        Dense(n_actions)])
+        Dense(10),
+        Activation('relu'),
+        Dense(n_actions),
+        Activation('softmax')])
     model.compile(optimizer=Adam(learning_rate), loss='mse')
     return model
-
-
-def preprocess_state(state):
-    columns = 7
-    rows = 6
-    state = state['board']
-    state = np.array(state)
-    state = np.reshape(state, (rows, columns, 1))
-    return state
 
