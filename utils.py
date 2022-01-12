@@ -1,4 +1,4 @@
-from keras.layers import Dense, Activation, Conv2D, BatchNormalization, Flatten
+from keras.layers import Dense, Activation
 from keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 import numpy as np
@@ -41,7 +41,7 @@ class ReplayBuffer(object):
         return states, actions, rewards, new_states, terminal
 
 
-def build_dqn(learning_rate, n_actions, input_dimensions, fc1_dimensions, fc2_dimensions):
+def build_model(learning_rate, n_actions, input_dimensions):
     model = Sequential([
         Dense(42, input_shape=(input_dimensions,)),
         Activation('relu'),

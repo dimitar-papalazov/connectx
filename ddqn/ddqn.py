@@ -1,7 +1,6 @@
 from keras.models import load_model
 import numpy as np
-from keras.models import Sequential
-from utils import ReplayBuffer, build_dqn
+from utils import ReplayBuffer, build_model
 
 
 class DDQNAgent(object):
@@ -17,8 +16,8 @@ class DDQNAgent(object):
         self.model_file = fname
         self.replace_target = replace_target
         self.memory = ReplayBuffer(memory_size, input_dimensions, n_actions, discrete=True)
-        self.q_evaluation = build_dqn(alpha, n_actions, input_dimensions, 256, 256)
-        self.q_target = build_dqn(alpha, n_actions, input_dimensions, 256, 256)
+        self.q_evaluation = build_model(alpha, n_actions, input_dimensions)
+        self.q_target = build_model(alpha, n_actions, input_dimensions)
 
     def remember(self, state, action, reward, new_state, done):
         state = state['board']

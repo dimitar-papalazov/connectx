@@ -1,6 +1,6 @@
 from keras.models import load_model
 import numpy as np
-from utils import ReplayBuffer, build_dqn
+from utils import ReplayBuffer, build_model
 
 
 class DQNAgent(object):
@@ -15,7 +15,7 @@ class DQNAgent(object):
         self.batch_size = batch_size
         self.model_file = fname
         self.memory = ReplayBuffer(memory_size, input_dimensions, n_actions, discrete=True)
-        self.q_evaluation = build_dqn(alpha, n_actions, input_dimensions, 256, 256)
+        self.q_evaluation = build_model(alpha, n_actions, input_dimensions)
 
     def remember(self, state, action, reward, new_state, done):
         state = state['board']
